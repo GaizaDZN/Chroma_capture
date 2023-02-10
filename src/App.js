@@ -1,25 +1,102 @@
-import logo from './logo.svg';
-import './App.css';
+import PalettePicker from "./components/PalettePicker";
+import Sidebar from "./components/Sidebar";
+import Alert from "./components/Alert";
+import { useState, useEffect } from "react";
+import { getColorScheme } from "./helpers/helpers";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [oldColors, setOldColors] = useState();
+  const [fetchedColors, setFetchedColors] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [hue, setHue] = useState();
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [colorMode, setColorMode] = useState("analogic");
+  const [check, setChecked] = useState(true);
+  const [savedPalette, setSavedPalette] = useState([]);
+
+  const handleHueChange = (color) => {
+    setHue(color.rgb);
+  };
+
+  const handleColorModeChange = (e) => {
+    setColorMode(e.target.value);
+  };
+
+  const handleChecked = (e) => {
+    setChecked(!check);
+  };
+
+  const getnewColors = () => {
+    getColorScheme(colorMode, hue, check).then((res) => {
+      let newOldColors = [...oldColors, res];
+      if (newOldColors.length > 5) {
+        newOldColors.shift();
+      }
+      setIsLoading(false);
+      setFetchedColors(res.colors);
+      setOldColors(newOldColors);
+      setHue(res.colors[0].rgb);
+    });
+  };
+
+  const handleKeyUp = (e) => {
+    if (e.code === "Space") {
+      getnewColors();
+    }
+  };
+
+  const swatchClickHandler = (palette, e) => {
+    navigator.clipboard.writeText(palette);
+    setSavedPalette(palette);
+    setAlertVisible(true);
+    setTimeout(() => {
+      setAlertVisible(false);
+    }, 1500);
+  };
+
+  const renderLoading = () => {
+    return (
+      <div className="mx-auto bg-gray-200 p-3">Fetching color data...</div>
+    );
+  };
+
+  const renderApp = () => {
+    return (
+      <div
+        className=" m-0 p-0 flex h-screen mx-auto bg-gray-200"
+        tabIndex={0}
+        onKeyUp={handleKeyUp}
+      >
+        <Alert alertVisible={alertVisible} />
+        <Sidebar
+          handleColorModeChange={handleColorModeChange}
+          colorMode={colorMode}
+          hue={hue}
+          handleHueChange={handleHueChange}
+          colorSchemes={oldColors}
+          swatchClickHandler={swatchClickHandler}
+          getnewColors={getnewColors}
+          handleChecked={handleChecked}
+          check={check}
+        />
+        <PalettePicker
+          colors={fetchedColors}
+          swatchClickHandler={swatchClickHandler}
+        />
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    getColorScheme(colorMode, "", check).then((res) => {
+      setIsLoading(false);
+      setFetchedColors(res.colors);
+      setOldColors([res]);
+      setHue(res.colors[0].rgb);
+    });
+  }, []);
+
+  return isLoading ? renderLoading() : renderApp();
 }
 
 export default App;
