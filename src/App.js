@@ -67,7 +67,7 @@ function App() {
   const renderApp = () => {
     return (
       <div
-        className="transition-all duration-1000 m-0 p-0 flex h-screen mx-auto bg-gray-200"
+        className="container-snap transition-all duration-1000 m-0 p-0 flex h-screen mx-auto bg-gray-200"
         tabIndex={0}
         onKeyUp={handleKeyUp}
       >

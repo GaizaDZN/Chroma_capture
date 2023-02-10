@@ -16,7 +16,7 @@ const Sidebar = ({
   check,
 }) => {
   return (
-    <div className=" w-2/6  h-full bg-slate-500 max flex flex-col justify-between  ">
+    <div className=" w-2/6 h-full bg-slate-500 flex flex-col justify-between  ">
       <Header />
       <ChromePicker
         disableAlpha={true}
