@@ -56,14 +56,18 @@ function App() {
 
   const renderLoading = () => {
     return (
-      <div className="mx-auto bg-gray-200 p-3">Fetching color data...</div>
+      <div className="transition-all h-24 duration-1000 absolute left-0 right-0 m-auto">
+        <div className="relative m-auto bg-black text-white w-full h-full">
+          Fetching color data...
+        </div>
+      </div>
     );
   };
 
   const renderApp = () => {
     return (
       <div
-        className=" m-0 p-0 flex h-screen mx-auto bg-gray-200"
+        className="transition-all duration-1000 m-0 p-0 flex h-screen mx-auto bg-gray-200"
         tabIndex={0}
         onKeyUp={handleKeyUp}
       >
