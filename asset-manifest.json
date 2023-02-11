@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Chroma_capture/static/css/main.2619896b.css",
-    "main.js": "/Chroma_capture/static/js/main.88e61ff4.js",
+    "main.js": "/Chroma_capture/static/js/main.5e8da3d5.js",
     "index.html": "/Chroma_capture/index.html",
     "main.2619896b.css.map": "/Chroma_capture/static/css/main.2619896b.css.map",
-    "main.88e61ff4.js.map": "/Chroma_capture/static/js/main.88e61ff4.js.map"
+    "main.5e8da3d5.js.map": "/Chroma_capture/static/js/main.5e8da3d5.js.map"
   },
   "entrypoints": [
     "static/css/main.2619896b.css",
-    "static/js/main.88e61ff4.js"
+    "static/js/main.5e8da3d5.js"
   ]
 }
